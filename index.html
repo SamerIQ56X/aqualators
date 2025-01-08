@@ -1502,7 +1502,7 @@
             </button>
             
         </div>
-        <p class="shortcut-note" style="user-select: auto;">Press Ctrl + Enter for quick translate</p>
+        <p class="shortcut-note" style="user-select: auto;">Press Enter for quick translate</p>
         <div class="examples"></div>
     </div>
     <div class="history-modal" id="historyModal">
@@ -2066,9 +2066,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-    // مستمع الأحداث لتنفيذ الترجمة عند الضغط على Ctrl + Enter
+    // مستمع الأحداث لتنفيذ الترجمة عند الضغط على Enter
     document.addEventListener('keydown', function(event) {
-        if (event.ctrlKey && event.key === 'Enter') {
+        if (event.key === 'Enter') {
             translate();
         }
     });
