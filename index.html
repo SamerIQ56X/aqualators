@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aqualator Translator</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="https://raw.githubusercontent.com/SamerIQ56X/aqualators/main/icon.png" type="image/png">
-  <style>
-
+    <style>
     :root {
         --primary: #3B82F6;
         --primary-dark: #1e40af;
         --primary-light: #60a5fa;
         --secondary: #4f46e5;
         --accent: #8b5cf6;
-        --background: #0F172A;
-        --surface: #1E293B;
+        --background: #0e1528;
+        --surface: #1a2133;
         --text: #F1F5F9;
-        --text-light: #94A3B8;
+        --text-light: #72829b;
         --error: #ef4444;
         --error-dark: #b91c1c;
         --success: #22c55e;
         --warning: #f59e0b;
-        --border: #334155;
+        --border: #20283d;
     }
 
     * {
@@ -63,15 +60,14 @@
     }
 
     .app-container {
-        max-width: 1200px;
+        max-width: 1500px;
         margin: 0 auto;
         padding: 2rem;
     }
     
     .header {
         text-align: center;
-        margin-bottom: 3rem;
-        padding: 3rem;
+        padding: 2rem;
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         border-radius: 24px;
         color: white;
@@ -113,7 +109,7 @@
     }
 
     .feature {
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--surface);
         backdrop-filter: blur(10px);
         padding: 1.5rem;
         border-radius: 16px;
@@ -133,7 +129,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2rem;
-        margin: 3rem 0;
+        margin: 2rem 0;
     }
 
     .translation-box {
@@ -143,22 +139,24 @@
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         position: relative;
         border: 1px solid var(--border);
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
     }
 
     .translation-box:hover {
         transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        border-color: var(--primary);
+        box-shadow: 0 0 0 4px var(--border);
+        border-color: var(--border);
     }
 
     .box-header {
+        direction: rtl;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
         border-bottom: 2px solid var(--border);
+        flex-direction: row;
     }
 
     .box-title {
@@ -179,22 +177,51 @@
     }
 
     textarea {
-        width: 100%;
-        min-height: 200px;
-        background: var(--background);
-        border: 2px solid var(--border);
-        border-radius: 12px;
-        padding: 1.25rem;
-        font-size: 1.1rem;
-        line-height: 1.6;
-        color: var(--text-light);
-        transition: all 0.3s ease;
-        resize: none;
+    width: 100%;
+    min-height: 260px;
+    background: var(--background);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    resize: none;
+    
+    /* تخصيص شريط التمرير */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--background);
+    
+    /* للكروم وسفاري */
+    &::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 4px;
     }
+    
+    &::-webkit-scrollbar-track {
+        background: var(--background);
+        border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+        
+        &:hover {
+            background: var(--accent);
+        }
+    }
+
+    /* إزالة الأسهم */
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+}
 
     textarea:focus {
         outline: none;
-        border-color: var(--primary);
+        border-color: var(--border);
         box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
@@ -278,7 +305,7 @@
     .btn-primary {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         color: white;
-        /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .btn-primary:hover {
@@ -317,7 +344,7 @@
     .example:hover {
         transform: translateY(-3px);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        border-color: var(--primary);
+        border-color: var(--border);
     }
 
     .example-body {
@@ -336,12 +363,14 @@
     }
 
     .example-body .original-text {
-        background: linear-gradient(270deg, rgb(59 130 246 / 0%), rgb(65 119 234 / 13%));
+        font-size: 18px;
+        background: linear-gradient(270deg, rgb(0 0 0 / 0%), rgb(63 120 243 / 45%));
         padding-left: 3rem;
     }
 
     .example-body .translation-text {
-        background: linear-gradient(270deg, rgb(19 18 21 / 0%), rgb(15 23 42));
+        font-size: 18px;    
+        background: linear-gradient(270deg, rgb(19 18 21 / 0%), rgb(32 42 69));
         padding-left: 3rem;
     }
 
@@ -384,61 +413,92 @@
         border: 1px solid var(--border);
     }
 
-    .loading-container {
-        position: fixed;
-        top: 0;
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.loading-box {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 300px;
+}
+
+.loading-icon {
+    color: var(--primary);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.loading-icon i {
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.progress-bar {
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.progress {
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--primary-light));
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loading {
+    0% {
+        width: 0%;
         left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(8px);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
     }
-
-    .loading-box {
-        background: var(--surface);
-        padding: 1rem 2rem;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        width: 250px;
-    }
-
-    .loading-text {
-        margin-top: 1rem;
-        color: var(--text);
-    }
-
-    .progress-bar {
+    50% {
         width: 100%;
-        height: 0.25rem; /* تصغير ارتفاع الشريط */
-        background: var(--primary-light);
-        border-radius: 8px;
-        overflow: hidden;
-        margin-top: 1rem;
+        left: 0;
     }
+    100% {
+        width: 0%;
+        left: 100%;
+    }
+}
 
-    .progress {
-        height: 100%;
-        width: 0;
-        background: var(--primary);
-        transition: width 0.3s ease;
-    }
+.loading-container.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+}
 
-    .loading-icon {
-        font-size: 2rem; /* حجم الأيقونة */
-        color: var(--primary);
-        animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
     .copy-notification {
         position: fixed;
@@ -536,7 +596,7 @@
 
     .language-selector:focus {
         outline: none;
-        border-color: var(--primary);
+        border-color: var(--border);
         box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
@@ -623,7 +683,7 @@
     }
 
     .history-item:hover {
-        border-color: var(--primary);
+        border-color: var(--border);
         transform: translateY(-2px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
@@ -826,7 +886,7 @@
 
         .history-item:hover {
             transform: translateY(-4px);
-            border-color: var(--primary);
+            border-color: var(--border);
             box-shadow: 0 8px 12px rgba(59, 130, 246, 0.1);
         }
 
@@ -991,6 +1051,7 @@
         }
 
             .target-input-css{
+                padding-bottom: 20px;
                 padding: 14px;
             }
 
@@ -1168,10 +1229,9 @@
         }
 
         .footer {
-            background-color: #111827;
+            direction: ltr;
             padding: 0.75rem 0;
             font-family: 'Inter', sans-serif;
-            /* border-top: 1px solid #1F2937; */
         }
 
         .footer-content {
@@ -1302,6 +1362,12 @@
             text-align: center;
             margin-top: 1rem;
             font-size: 0.9rem;
+            
+            padding-bottom: 50px;
+        }
+
+        .texts-light{
+            color: var(--text-light);
         }
     </style>
 </head>
@@ -1324,7 +1390,7 @@
 
     <div id="copyNotification" class="copy-notification">
         <i class="fas fa-check-circle"></i>
-        <span>Text Text was copied</span>
+        <span>The text was copied to the clipboard</span>
     </div>
 
     <div class="loading-container" id="loadingOverlay">
@@ -1341,31 +1407,29 @@
 
     <div class="app-container">
         <header class="header">
-            <h1>
+            <h2>
                 <i class="fas fa-language"></i>
                 Aqualator 
-            </h1>
-            <p>An AI-Powered Translation Website</p>
-            <div class="features">
-                <div class="feature">
-                    <i class="fas fa-magic"></i>
-                    Auto detect the language
-                </div>
-                <div class="feature">
-                    <i class="fas fa-star"></i>
-                    Save record without Sign-in
-                </div>
-                <div class="feature">
-                    <i class="fas fa-lightbulb"></i>
-                    Intelligent examples
-                </div>
-                <div class="feature">
-                    <i class="fas fa-history"></i>
-                    Save the History
-                </div>
-            </div>
+            </h2>
         </header>
-
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-magic"></i>
+                Auto detect the language
+            </div>
+            <div class="feature">
+                <i class="fas fa-exchange-alt"></i>
+                The translation is verified by Ai
+            </div>
+            <div class="feature">
+                <i class="fas fa-lightbulb"></i>
+                Intelligent examples
+            </div>
+            <div class="feature">
+                <i class="fas fa-history"></i>
+                Save the History
+            </div>
+        </div>
         <div class="translation-grid">
             <div class="translation-box">
                 <div class="box-header">
@@ -1388,6 +1452,7 @@
                         Mic
                     </button>
                 </div>
+                
             </div>
             <div class="translation-box">
                 <div class="box-header">
@@ -1419,17 +1484,17 @@
                 <i class="fas fa-exchange-alt"></i>
                 Translate
             </button>
-            <button class="btn btn-secondary" onclick="clearText()">
-                <i class="fas fa-trash-alt"></i>
-                Clear
-            </button>
             <button class="btn btn-tertiary" onclick="showHistory()">
                 <i class="fas fa-history"></i>
                 History
             </button>
+            <button class="btn btn-secondary" onclick="clearText()">
+                <i class="fas fa-trash-alt"></i>
+                Clear
+            </button>
+            
         </div>
-        <p class="shortcut-note">Press Ctrl + Enter for quick search</p>
-        </div>
+        <p class="shortcut-note" style="user-select: auto;">Press Ctrl + Enter for quick translate</p>
         <div class="examples"></div>
     </div>
     <div class="history-modal" id="historyModal">
@@ -1450,9 +1515,15 @@
                             <i class="fab fa-discord"></i>
                             <span class="icon-text">Discord</span>
                         </a>
-                        <a href="https://www.instagram.com/ak.xr/" class="icon-link">
+                        <a href="https://www.instagram.com/ak.xr/" 
+                            class="icon-link" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
                             <i class="fab fa-instagram"></i>
-                            <span class="icon-text">Instagram</span>
+                            <a href="https://www.instagram.com/ak.xr/" 
+                            class="icon-link" 
+                            target="_blank" 
+                            rel="noopener noreferrer">
                         </a>
                     </div>
                 </div>
@@ -1606,35 +1677,98 @@ class TranslationManager {
     }
 
     async translate(text, sourceLang, targetLang) {
-            try {
-                // إعداد النص المرسل لطلب الترجمة الحرفية
-                const prompt = `Translate the following text from ${this.SUPPORTED_LANGUAGES[sourceLang]} to ${this.SUPPORTED_LANGUAGES[targetLang]}. The translation should be literal and preserve the original meaning exactly without adding any extra symbols or characters:\n\n"${text}"\n\n`;
+    try {
+        // تحسين نص الطلب ليكون أكثر صرامة
+        const prompt = `Translate the following text from ${this.SUPPORTED_LANGUAGES[sourceLang]} to ${this.SUPPORTED_LANGUAGES[targetLang]}. 
+The translation must be completely literal and exact, without any decorative quotes or special characters.
+Do not add any quotation marks, angle brackets, or any other symbols at the beginning or end of the translation.
+Just provide the plain translated text:
 
-                // إرسال الطلب إلى واجهة برمجة التطبيقات
-                const response = await fetch(`${this.GEMINI_API_URL}?key=${this.API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: prompt }]
-                        }]
-                    })
-                });
+${text}`;
+        
+        const response = await fetch(`${this.GEMINI_API_URL}?key=${this.API_KEY}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: prompt }]
+                }]
+            })
+        });
 
-                // التحقق من استجابة الطلب
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        
+        // تنظيف موسع للنص المترجم
+        const translation = data.candidates[0].content.parts[0].text
+            .replace(/^["'«»""]/g, '') // إزالة علامات البداية
+            .replace(/["'«»"""]$/g, '') // إزالة علامات النهاية
+            .replace(/[""]/g, '') // إزالة علامات الاقتباس المزدوجة في أي مكان
+            .replace(/[«»]/g, '') // إزالة علامات التنصيص الفرنسية
+            .trim();
 
-                const data = await response.json();
-                // إزالة أي علامات اقتباس مضافة من النص المترجم
-                return data.candidates[0].content.parts[0].text.replace(/^["']|["']$/g, '').trim();
-            } catch (error) {
-                console.error('Translation error:', error);
-                throw error;
+        // تحسين نص التحقق
+        const verificationPrompt = `Translate the following text from ${this.SUPPORTED_LANGUAGES[targetLang]} to ${this.SUPPORTED_LANGUAGES[sourceLang]}. 
+            The translation must be completely literal and exact, without any decorative quotes or special characters.
+            Do not add any quotation marks, angle brackets, or any other symbols:
+
+            ${translation}`;
+                    
+                    const verificationResponse = await fetch(`${this.GEMINI_API_URL}?key=${this.API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{
+                                parts: [{ text: verificationPrompt }]
+                            }]
+                        })
+                    });
+
+                    if (!verificationResponse.ok) throw new Error(`HTTP error! status: ${verificationResponse.status}`);
+                    const verificationData = await verificationResponse.json();
+                    
+                    // تنظيف الترجمة العكسية بنفس الطريقة
+                    const backTranslation = verificationData.candidates[0].content.parts[0].text
+                        .replace(/^["'«»""]/g, '')
+                        .replace(/["'«»"""]$/g, '')
+                        .replace(/[""]/g, '')
+                        .replace(/[«»]/g, '')
+                        .trim();
+
+                    // مقارنة النص الأصلي مع الترجمة العكسية
+                    if (this.calculateSimilarity(text, backTranslation) < 0.8) {
+                        console.warn('Warning: Translation might not be accurate');
+                    }
+
+                    return translation;
+                } catch (error) {
+                    console.error('Translation error:', error);
+                    throw error;
+                }
             }
-        }
 
-        async handleTranslate() {
+// دالة لحساب مدى تشابه النصوص (بقيت كما هي)
+calculateSimilarity(text1, text2) {
+    // تنظيف النصوص من علامات الترقيم والمسافات الزائدة
+    const clean1 = text1.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+    const clean2 = text2.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+    
+    // تقسيم النصوص إلى كلمات
+    const words1 = clean1.split(/\s+/);
+    const words2 = clean2.split(/\s+/);
+    
+    // حساب عدد الكلمات المتشابهة
+    const commonWords = words1.filter(word => words2.includes(word));
+    
+    // حساب نسبة التشابه
+    return commonWords.length / Math.max(words1.length, words2.length);
+}
+
+    async handleTranslate() {
+        // Get the input text and trim any whitespace
         const text = this.elements.inputText?.value?.trim() || '';
+        
+        // Check if text is empty after trimming
         if (!text) {
             showErrorModal();
             if (this.elements.outputText) {
@@ -1645,58 +1779,57 @@ class TranslationManager {
 
         if (this.elements.loadingOverlay) {
             this.elements.loadingOverlay.style.display = 'flex';
-            this.updateProgressBar(0);
         }
         if (this.elements.translateBtn) {
             this.elements.translateBtn.disabled = true;
         }
 
-        // تحديث شريط التقدم بشكل تدريجي
-        let progress = 0;
-        const interval = setInterval(() => {
-            if (progress < 90) {
-                progress += 10;
-                this.updateProgressBar(progress);
-            }
-        }, 500);
-
         try {
-            const sourceLang = this.detectLanguage(text);
-            const targetLang = this.selectedTargetLang;
-            const translation = await this.translate(text, sourceLang, targetLang);
-            
-            if (this.elements.outputText) {
-                this.elements.outputText.value = translation;
-            }
-            
-            const examples = await this.generateExamples(text, translation, sourceLang, targetLang);
-            this.addToHistory(text, translation, sourceLang, targetLang, examples);
+        const sourceLang = this.detectLanguage(text);
+        const targetLang = this.selectedTargetLang;
 
-            this.updateProgressBar(100);
-        } catch (error) {
-            console.error('Translation error:', error);
-            if (this.elements.outputText) {
-                this.elements.outputText.value = 'عذراً، حدث خطأ أثناء الترجمة. يرجى المحاولة مرة أخرى.';
+        // Start progress animation
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += 2;
+            if (progress > 90) clearInterval(progressInterval);
+            if (this.elements.progressBar) {
+                this.elements.progressBar.style.width = `${progress}%`;
             }
-            this.updateProgressBar(0);
-        } finally {
-            clearInterval(interval);
-            setTimeout(() => {
-                if (this.elements.loadingOverlay) {
-                    this.elements.loadingOverlay.style.display = 'none';
-                }
-                if (this.elements.translateBtn) {
-                    this.elements.translateBtn.disabled = false;
-                }
-            }, 500);
+        }, 50);
+
+        const translation = await this.translate(text, sourceLang, targetLang);
+        
+        if (this.elements.outputText) {
+            this.elements.outputText.value = translation;
         }
-    }
+        
+        const examples = await this.generateExamples(text, translation, sourceLang, targetLang);
+        this.addToHistory(text, translation, sourceLang, targetLang, examples);
 
-    updateProgressBar(percentage) {
+        // Complete progress animation
         if (this.elements.progressBar) {
-            this.elements.progressBar.style.width = `${percentage}%`;
+            this.elements.progressBar.style.width = '100%';
+        }
+        
+    } catch (error) {
+        console.error('Translation error:', error);
+        if (this.elements.outputText) {
+            this.elements.outputText.value = 'عذراً، حدث خطأ أثناء الترجمة. يرجى المحاولة مرة أخرى.';
+        }
+    } finally {
+        // Hide loading overlay using your style
+        if (this.elements.loadingOverlay) {
+            this.elements.loadingOverlay.style.display = 'none';
+        }
+        if (this.elements.translateBtn) {
+            this.elements.translateBtn.disabled = false;
+        }
+        if (this.elements.progressBar) {
+            this.elements.progressBar.style.width = '0%';
         }
     }
+}
 
     async generateExamples(text, translation, sourceLang, targetLang) {
         const examplesContainer = document.querySelector('.examples');
@@ -1748,17 +1881,17 @@ class TranslationManager {
         const examplesHTML = examples.map((example, index) => `
             <div class="example">
                 <div class="example-body">
-                    <p class="translation-text">
-                        <span class="language-label ${translationManager.selectedTargetLang}">
-                            ${translationManager.SUPPORTED_LANGUAGES[translationManager.selectedTargetLang]}
-                        </span>
-                        ${example.translation}
-                    </p>
                     <p class="original-text">
                         <span class="language-label ${translationManager.detectLanguage(example.original)}">
                             ${translationManager.SUPPORTED_LANGUAGES[translationManager.detectLanguage(example.original)]}
                         </span>
                         ${example.original}
+                    </p>
+                    <p class="translation-text">
+                        <span class="language-label ${translationManager.selectedTargetLang}">
+                            ${translationManager.SUPPORTED_LANGUAGES[translationManager.selectedTargetLang]}
+                        </span>
+                        ${example.translation}
                     </p>
                 </div>
             </div>
@@ -1852,7 +1985,7 @@ class TranslationManager {
                 this.translationHistory.map(entry => `
                     <div class="history-item">
                         <div class="history-item-header">
-                            <span class="history-item-time">${new Date(entry.timestamp).toLocaleString('ar')}</span>
+                            <span class="history-item-time">${new Date(entry.timestamp).toLocaleString('en')}</span>
                         </div>
                         <div class="history-item-content">
                             <div class="history-item-text">
@@ -1931,7 +2064,6 @@ document.addEventListener('DOMContentLoaded', () => {
             translate();
         }
     });
-    // إضافة الملاحظة تحت الأزرار
 
 // إضافة ملاحظة عن الاختصار في HTML
 const controlsContainer = document.querySelector('.controls');
@@ -2246,21 +2378,21 @@ function startRecognition() {
     };
 
     recognition.start();
+}
+
+// إيقاف النطق عند الخروج من الصفحة
+window.addEventListener('beforeunload', () => {
+    if (currentUtterance) {
+        speechSynthesis.cancel();
     }
+});
 
-    // إيقاف النطق عند الخروج من الصفحة
-    window.addEventListener('beforeunload', () => {
-        if (currentUtterance) {
-            speechSynthesis.cancel();
-        }
-    });
+// تحميل الأصوات عند بدء التطبيق
+document.addEventListener('DOMContentLoaded', loadVoices);
 
-    // تحميل الأصوات عند بدء التطبيق
-    document.addEventListener('DOMContentLoaded', loadVoices);
-
-    // تهيئة متغيرات عامة للتحكم في النطق
-    let currentUtterance = null;
-    let speechSynthesis = window.speechSynthesis;
-    let voices = [];
+// تهيئة متغيرات عامة للتحكم في النطق
+let currentUtterance = null;
+let speechSynthesis = window.speechSynthesis;
+let voices = [];
 
 </script>
