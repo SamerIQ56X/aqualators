@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aqualator Translator</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" href="https://raw.githubusercontent.com/SamerIQ56X/aqualators/main/icon.png" type="image/png">
-  <style>
-
+    <style>
     :root {
         --primary: #3B82F6;
         --primary-dark: #1e40af;
@@ -153,12 +150,14 @@
     }
 
     .box-header {
+        direction: rtl;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1.5rem;
         padding-bottom: 1rem;
         border-bottom: 2px solid var(--border);
+        flex-direction: row;
     }
 
     .box-title {
@@ -278,7 +277,7 @@
     .btn-primary {
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         color: white;
-        /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .btn-primary:hover {
@@ -400,44 +399,16 @@
 
     .loading-box {
         background: var(--surface);
-        padding: 1rem 2rem;
-        border-radius: 12px;
+        padding: 2rem;
+        border-radius: 24px;
         text-align: center;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        width: 250px;
-    }
-
-    .loading-text {
-        margin-top: 1rem;
-        color: var(--text);
-    }
-
-    .progress-bar {
-        width: 100%;
-        height: 0.25rem; /* تصغير ارتفاع الشريط */
-        background: var(--primary-light);
-        border-radius: 8px;
-        overflow: hidden;
-        margin-top: 1rem;
-    }
-
-    .progress {
-        height: 100%;
-        width: 0;
-        background: var(--primary);
-        transition: width 0.3s ease;
     }
 
     .loading-icon {
-        font-size: 2rem; /* حجم الأيقونة */
-        color: var(--primary);
-        animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
+        font-size: 2rem;
+        color: var (--primary);
+        animation: spin 1s infinite linear;
     }
 
     .copy-notification {
@@ -991,6 +962,7 @@
         }
 
             .target-input-css{
+                padding-bottom: 20px;
                 padding: 14px;
             }
 
@@ -1168,10 +1140,11 @@
         }
 
         .footer {
+            direction: ltr;
             background-color: #111827;
             padding: 0.75rem 0;
             font-family: 'Inter', sans-serif;
-            /* border-top: 1px solid #1F2937; */
+            border-top: 1px solid #1F2937;
         }
 
         .footer-content {
@@ -1302,6 +1275,8 @@
             text-align: center;
             margin-top: 1rem;
             font-size: 0.9rem;
+            
+            padding-bottom: 50px;
         }
     </style>
 </head>
@@ -1329,13 +1304,8 @@
 
     <div class="loading-container" id="loadingOverlay">
         <div class="loading-box">
-            <div class="loading-icon">
-                <i class="fas fa-sync-alt"></i>
-            </div>
-            <p class="loading-text">Please wait a moment...</p>
-            <div class="progress-bar">
-                <div class="progress" id="progressBar"></div>
-            </div>
+            <i class="fas fa-language loading-icon"></i>
+            <p>Please wait a moment</p>
         </div>
     </div>
 
@@ -1352,7 +1322,7 @@
                     Auto detect the language
                 </div>
                 <div class="feature">
-                    <i class="fas fa-star"></i>
+                    <i class="fas fa-exchange-alt"></i>
                     Save record without Sign-in
                 </div>
                 <div class="feature">
@@ -1388,6 +1358,7 @@
                         Mic
                     </button>
                 </div>
+                
             </div>
             <div class="translation-box">
                 <div class="box-header">
@@ -1419,17 +1390,17 @@
                 <i class="fas fa-exchange-alt"></i>
                 Translate
             </button>
-            <button class="btn btn-secondary" onclick="clearText()">
-                <i class="fas fa-trash-alt"></i>
-                Clear
-            </button>
             <button class="btn btn-tertiary" onclick="showHistory()">
                 <i class="fas fa-history"></i>
                 History
             </button>
+            <button class="btn btn-secondary" onclick="clearText()">
+                <i class="fas fa-trash-alt"></i>
+                Clear
+            </button>
+            
         </div>
-        <p class="shortcut-note">Press Ctrl + Enter for quick search</p>
-        </div>
+        <p class="shortcut-note" style="user-select: auto;">Press Ctrl + Enter for quick search</p>
         <div class="examples"></div>
     </div>
     <div class="history-modal" id="historyModal">
@@ -1543,7 +1514,6 @@ class TranslationManager {
 
     initElements() {
         this.elements = {
-
             inputText: document.getElementById('inputText'),
             outputText: document.getElementById('outputText'),
             translateBtn: document.getElementById('translateBtn'),
@@ -1551,7 +1521,6 @@ class TranslationManager {
             copyBtn: document.getElementById('copyBtn'),
             charCount: document.getElementById('outputCharCount'),
             loadingOverlay: document.getElementById('loadingOverlay'),
-            progressBar: document.getElementById('progressBar'),
             sourceLangIndicator: document.getElementById('sourceLangIndicator'),
             targetLangIndicator: document.getElementById('targetLangIndicator'),
             examples: document.querySelector('.examples'),
@@ -1633,8 +1602,11 @@ class TranslationManager {
             }
         }
 
-        async handleTranslate() {
+    async handleTranslate() {
+        // Get the input text and trim any whitespace
         const text = this.elements.inputText?.value?.trim() || '';
+        
+        // Check if text is empty after trimming
         if (!text) {
             showErrorModal();
             if (this.elements.outputText) {
@@ -1645,20 +1617,10 @@ class TranslationManager {
 
         if (this.elements.loadingOverlay) {
             this.elements.loadingOverlay.style.display = 'flex';
-            this.updateProgressBar(0);
         }
         if (this.elements.translateBtn) {
             this.elements.translateBtn.disabled = true;
         }
-
-        // تحديث شريط التقدم بشكل تدريجي
-        let progress = 0;
-        const interval = setInterval(() => {
-            if (progress < 90) {
-                progress += 10;
-                this.updateProgressBar(progress);
-            }
-        }, 500);
 
         try {
             const sourceLang = this.detectLanguage(text);
@@ -1671,30 +1633,19 @@ class TranslationManager {
             
             const examples = await this.generateExamples(text, translation, sourceLang, targetLang);
             this.addToHistory(text, translation, sourceLang, targetLang, examples);
-
-            this.updateProgressBar(100);
+            
         } catch (error) {
             console.error('Translation error:', error);
             if (this.elements.outputText) {
                 this.elements.outputText.value = 'عذراً، حدث خطأ أثناء الترجمة. يرجى المحاولة مرة أخرى.';
             }
-            this.updateProgressBar(0);
         } finally {
-            clearInterval(interval);
-            setTimeout(() => {
-                if (this.elements.loadingOverlay) {
-                    this.elements.loadingOverlay.style.display = 'none';
-                }
-                if (this.elements.translateBtn) {
-                    this.elements.translateBtn.disabled = false;
-                }
-            }, 500);
-        }
-    }
-
-    updateProgressBar(percentage) {
-        if (this.elements.progressBar) {
-            this.elements.progressBar.style.width = `${percentage}%`;
+            if (this.elements.loadingOverlay) {
+                this.elements.loadingOverlay.style.display = 'none';
+            }
+            if (this.elements.translateBtn) {
+                this.elements.translateBtn.disabled = false;
+            }
         }
     }
 
@@ -1852,7 +1803,7 @@ class TranslationManager {
                 this.translationHistory.map(entry => `
                     <div class="history-item">
                         <div class="history-item-header">
-                            <span class="history-item-time">${new Date(entry.timestamp).toLocaleString('ar')}</span>
+                            <span class="history-item-time">${new Date(entry.timestamp).toLocaleString('en')}</span>
                         </div>
                         <div class="history-item-content">
                             <div class="history-item-text">
@@ -1931,7 +1882,6 @@ document.addEventListener('DOMContentLoaded', () => {
             translate();
         }
     });
-    // إضافة الملاحظة تحت الأزرار
 
 // إضافة ملاحظة عن الاختصار في HTML
 const controlsContainer = document.querySelector('.controls');
@@ -2246,21 +2196,21 @@ function startRecognition() {
     };
 
     recognition.start();
+}
+
+// إيقاف النطق عند الخروج من الصفحة
+window.addEventListener('beforeunload', () => {
+    if (currentUtterance) {
+        speechSynthesis.cancel();
     }
+});
 
-    // إيقاف النطق عند الخروج من الصفحة
-    window.addEventListener('beforeunload', () => {
-        if (currentUtterance) {
-            speechSynthesis.cancel();
-        }
-    });
+// تحميل الأصوات عند بدء التطبيق
+document.addEventListener('DOMContentLoaded', loadVoices);
 
-    // تحميل الأصوات عند بدء التطبيق
-    document.addEventListener('DOMContentLoaded', loadVoices);
-
-    // تهيئة متغيرات عامة للتحكم في النطق
-    let currentUtterance = null;
-    let speechSynthesis = window.speechSynthesis;
-    let voices = [];
+// تهيئة متغيرات عامة للتحكم في النطق
+let currentUtterance = null;
+let speechSynthesis = window.speechSynthesis;
+let voices = [];
 
 </script>
