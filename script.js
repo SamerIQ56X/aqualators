@@ -1,18 +1,4 @@
-
-window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-
-
-import * as PlayHT from 'playht';
-
-// Initialize client
-PlayHT.init({
-  userId: 'GFPsCMm1iqMxBgQcOWozxjneXmB3',
-  apiKey: 'ba4738c7f85b4172b357ef56ec30c4c4',
-});
-
 // دالة لفك تشفير النصوص باستخدام Base64
-
-
 function decodeBase64(encoded) {
     return atob(encoded);
 }
@@ -201,7 +187,7 @@ function getVoiceForLanguage(lang) {
             femaleIndicators.some(indicator => 
                 v.name.toLowerCase().includes(indicator)
             )
-        ) || voices.find(v => v.lang === 'no-NO') || voices.find(v => v.name === "Microsoft Hulda Desktop");
+        ) || voices.find(v => v.name === "Microsoft Hulda Desktop") || voices.find(v => v.lang === 'no-NO');
     }
 
     if (!femaleVoice) {
@@ -228,56 +214,49 @@ async function speakText(elementId) {
         const button = event.currentTarget;
 
         if (currentUtterance) {
-            // Cancel any ongoing speech
+            speechSynthesis.cancel();
             currentUtterance = null;
             button.classList.remove('speaking');
             button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
             return;
         }
 
+        if (!voices.length) {
+            voices = await loadVoices();
+        }
+
         const lang = elementId === 'inputText' ? 
             translationManager.detectLanguage(text) : 
             translationManager.selectedTargetLang;
 
-        // Use PlayHT API for speech synthesis
-        const voiceOptions = {
-            voiceEngine: 'PlayDialog',
-            language: lang,
-            voice: 'female' // يمكنك تخصيص الصوت حسب الحاجة
-        };
-
-        const stream = await PlayHT.stream(text, voiceOptions);
-        const audioChunks = [];
-
-        stream.on('data', (chunk) => {
-            audioChunks.push(chunk);
-        });
-
-        stream.on('end', () => {
-            const blob = new Blob(audioChunks, { type: 'audio/mp3' });
-            const url = URL.createObjectURL(blob);
-            const audio = new Audio(url);
-
-            audio.onended = () => {
-                button.classList.remove('speaking');
-                button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
-                currentUtterance = null;
-            };
-
-            audio.onerror = (event) => {
-                console.error('Audio error:', event);
-                button.classList.remove('speaking');
-                button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
-                currentUtterance = null;
-                showErrorModal('An error occurred while pronouncing');
-            };
-
-            currentUtterance = audio;
-            audio.play();
-        });
+        const utterance = new SpeechSynthesisUtterance(text);
+        const selectedVoice = getVoiceForLanguage(lang);
+        
+        utterance.voice = selectedVoice;
+        utterance.lang = lang;
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
 
         button.classList.add('speaking');
         button.innerHTML = '<i class="fas fa-stop"></i> Stop';
+
+        utterance.onend = () => {
+            button.classList.remove('speaking');
+            button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+            currentUtterance = null;
+        };
+
+        utterance.onerror = (event) => {
+            console.error('Speech error:', event.error);
+            button.classList.remove('speaking');
+            button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
+            currentUtterance = null;
+            showErrorModal('An error occurred while pronouncing');
+        };
+
+        currentUtterance = utterance;
+        speechSynthesis.speak(utterance);
 
     } catch (error) {
         console.error('Speech synthesis error:', error);
