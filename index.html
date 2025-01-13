@@ -17,163 +17,168 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+
+<script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+
+
 <body>
-
-    <div id="errorModal" class="error-modal">
-        <div class="error-content">
-            <div class="error-icon">
-                <i class="fas fa-exclamation-circle"></i>
-            </div>
-            <h3>Please enter text to translate!</h3>
-            <p>Please enter text to translate</p>
-            <button class="error-close" onclick="closeErrorModal()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-    </div>
-
-    <div id="copyNotification" class="copy-notification">
-        <i class="fas fa-check-circle"></i>
-        <span>The text was copied to the clipboard</span>
-    </div>
-
-    <div class="loading-container" id="loadingOverlay">
-        <div class="loading-box">
-            <div class="loading-icon">
-                <i class="fas fa-sync-alt"></i>
-            </div>
-            <p class="loading-text">Please wait a moment...</p>
-            <div class="progress-bar">
-                <div class="progress" id="progressBar"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="app-container">
-        <header class="header">
-            <h2>
-                <i class="fas fa-language"></i>
-                Aqualator 
-            </h2>
-        </header>
-        <div class="features">
-            <div class="feature">
-                <i class="fas fa-magic"></i>
-                Auto detect the language
-            </div>
-            <div class="feature">
-                <i class="fas fa-circle-nodes"></i>
-                The translation is verified by Ai
-            </div>
-            <div class="feature">
-                <i class="fas fa-lightbulb"></i>
-                Intelligent examples
-            </div>
-            <div class="feature">
-                <i class="fas fa-history"></i>
-                Save the History
-            </div>
-        </div>
-        <div class="translation-grid">
-            <div class="translation-box">
-                <div class="box-header">
-                    <i class="fas fa-keyboard"></i>
-                    <h3 class="target-input-css">Automated Recognition</h3>
+    <div id="app">
+        <div id="errorModal" class="error-modal">
+            <div class="error-content">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-circle"></i>
                 </div>
-                <textarea id="inputText" placeholder="Write or paste the text here" onkeyup="updateCharCount('inputCharCount', this.value.length)"></textarea>
-                <div class="text-controls">
-                    <div id="inputCharCount" class="char-count">0 / 5000</div>
-                    <button class="copy-btn" onclick="copyText('inputText')">
-                        <i class="fas fa-copy"></i>
-                        Copy
-                    </button>
-                    <button class="speech-btn" onclick="speakText('inputText')">
-                        <i class="fas fa-volume-up"></i>
-                        Listen
-                    </button>
-                    <button class="microphone-btn" onclick="startRecognition()">
-                        <i class="fas fa-microphone"></i>
-                        Mic
-                    </button>
+                <h3>Please enter text to translate!</h3>
+                <p>Please enter text to translate</p>
+                <button class="error-close" onclick="closeErrorModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="copyNotification" class="copy-notification">
+            <i class="fas fa-check-circle"></i>
+            <span>The text was copied to the clipboard</span>
+        </div>
+
+        <div class="loading-container" id="loadingOverlay">
+            <div class="loading-box">
+                <div class="loading-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <p class="loading-text">Please wait a moment...</p>
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
                 </div>
             </div>
-            <div class="translation-box">
-                <div class="box-header">
+        </div>
+
+        <div class="app-container">
+            <header class="header">
+                <h2>
                     <i class="fas fa-language"></i>
-                    <h3>Translation</h3>
-                    <select id="targetLanguageSelect" class="language-selector" aria-label="Language Selector">
-                        <option value="no">Norwegian</option>
-                        <option value="en">English</option>
-                        <option value="ru">Русский</option>
-                        <option value="ar">Arabic</option>
-                    </select>
+                    Aqualator 
+                </h2>
+            </header>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-magic"></i>
+                    Auto detect the language
                 </div>
-                <textarea id="outputText" placeholder="Translation will appear here" readonly></textarea>
-                <div class="text-controls">
-                    <div id="outputCharCount" class="char-count">0 / 5000</div>
-                    <button class="copy-btn" onclick="copyText('outputText')">
-                        <i class="fas fa-copy"></i>
-                        Copy
-                    </button>
-                    <button class="speech-btn" onclick="speakText('outputText')">
-                        <i class="fas fa-volume-up"></i>
-                        Listen
-                    </button>
+                <div class="feature">
+                    <i class="fas fa-circle-nodes"></i>
+                    The translation is verified by Ai
+                </div>
+                <div class="feature">
+                    <i class="fas fa-lightbulb"></i>
+                    Intelligent examples
+                </div>
+                <div class="feature">
+                    <i class="fas fa-history"></i>
+                    Save the History
                 </div>
             </div>
-        </div>
-        
-        <div class="controls">
-            <button id="translateBtn" class="btn btn-primary" onclick="translate()">
-                <i class="fas fa-exchange-alt"></i>
-                Translate
-            </button>
-            <button class="btn btn-tertiary" onclick="showHistory()">
-                <i class="fas fa-history"></i>
-                History
-            </button>
-            <button class="btn btn-secondary" onclick="clearText()">
-                <i class="fas fa-trash-alt"></i>
-                Clear
-            </button>
-        </div>
-        <p class="shortcut-note" style="user-select: auto;">Press Ctrl + Enter for quick translate</p>
-        <div class="examples"></div>
-    </div>
-    <div class="history-modal" id="historyModal">
-        <div class="history-content">
-            <button class="history-close" onclick="closeHistory()">&times;</button>
-            <h2 class="History-text">History</h2>
-            <div class="history-list" id="historyList"></div>
-            <button class="clear-history-btn" onclick="clearHistory()">Delete the History</button>
-        </div>
-    </div>
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="left-group">
-                    <a href="#" class="brand">Aqualator</a>
-                    <div class="social-icons">
-                        <a href="#" class="icon-link">
-                            <i class="fab fa-discord"></i>
-                            <span class="icon-text">Discord</span>
-                        </a>
-                        <a href="https://www.instagram.com/ak.xr/" 
-                            class="icon-link" 
-                            target="_blank" 
-                            rel="noopener noreferrer">
-                            <i class="fab fa-instagram"></i>
-                        </a>
+            <div class="translation-grid">
+                <div class="translation-box">
+                    <div class="box-header">
+                        <i class="fas fa-keyboard"></i>
+                        <h3 class="target-input-css">Automated Recognition</h3>
+                    </div>
+                    <textarea id="inputText" placeholder="Write or paste the text here" onkeyup="updateCharCount('inputCharCount', this.value.length)"></textarea>
+                    <div class="text-controls">
+                        <div id="inputCharCount" class="char-count">0 / 5000</div>
+                        <button class="copy-btn" onclick="copyText('inputText')">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                        <button class="speech-btn" onclick="speakText('inputText')">
+                            <i class="fas fa-volume-up"></i>
+                            Listen
+                        </button>
+                        <button class="microphone-btn" onclick="startRecognition()">
+                            <i class="fas fa-microphone"></i>
+                            Mic
+                        </button>
                     </div>
                 </div>
-                <span class="gemini-text">
-                    Powered by Gemini
-                </span>
+                <div class="translation-box">
+                    <div class="box-header">
+                        <i class="fas fa-language"></i>
+                        <h3>Translation</h3>
+                        <select id="targetLanguageSelect" class="language-selector" aria-label="Language Selector">
+                            <option value="no">Norwegian</option>
+                            <option value="en">English</option>
+                            <option value="ru">Русский</option>
+                            <option value="ar">Arabic</option>
+                        </select>
+                    </div>
+                    <textarea id="outputText" placeholder="Translation will appear here" readonly></textarea>
+                    <div class="text-controls">
+                        <div id="outputCharCount" class="char-count">0 / 5000</div>
+                        <button class="copy-btn" onclick="copyText('outputText')">
+                            <i class="fas fa-copy"></i>
+                            Copy
+                        </button>
+                        <button class="speech-btn" onclick="speakText('outputText')">
+                            <i class="fas fa-volume-up"></i>
+                            Listen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button id="translateBtn" class="btn btn-primary" onclick="translate()">
+                    <i class="fas fa-exchange-alt"></i>
+                    Translate
+                </button>
+                <button class="btn btn-tertiary" onclick="showHistory()">
+                    <i class="fas fa-history"></i>
+                    History
+                </button>
+                <button class="btn btn-secondary" onclick="clearText()">
+                    <i class="fas fa-trash-alt"></i>
+                    Clear
+                </button>
+            </div>
+            <p class="shortcut-note" style="user-select: auto;">Press Ctrl + Enter for quick translate</p>
+            <div class="examples"></div>
+        </div>
+        <div class="history-modal" id="historyModal">
+            <div class="history-content">
+                <button class="history-close" onclick="closeHistory()">&times;</button>
+                <h2 class="History-text">History</h2>
+                <div class="history-list" id="historyList"></div>
+                <button class="clear-history-btn" onclick="clearHistory()">Delete the History</button>
             </div>
         </div>
-    </footer>
-    <script>
-        window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script></body>
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="left-group">
+                        <a href="#" class="brand">Aqualator</a>
+                        <div class="social-icons">
+                            <a href="#" class="icon-link">
+                                <i class="fab fa-discord"></i>
+                                <span class="icon-text">Discord</span>
+                            </a>
+                            <a href="https://www.instagram.com/ak.xr/" 
+                                class="icon-link" 
+                                target="_blank" 
+                                rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <span class="gemini-text">
+                        Powered by Gemini
+                    </span>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
 </html>
