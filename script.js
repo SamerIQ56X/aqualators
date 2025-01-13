@@ -148,6 +148,7 @@ function loadVoices() {
     return new Promise((resolve) => {
         let voices = speechSynthesis.getVoices();
         if (voices.length > 0) {
+            console.log(voices); // عرض الأصوات المتاحة
             resolve(voices);
         } else {
             speechSynthesis.addEventListener('voiceschanged', () => {
@@ -234,7 +235,7 @@ async function speakText(elementId) {
 
         const utterance = new SpeechSynthesisUtterance(text);
         const selectedVoice = getVoiceForLanguage(lang);
-        
+
         utterance.voice = selectedVoice;
         utterance.lang = lang;
         utterance.rate = 1;
@@ -255,7 +256,7 @@ async function speakText(elementId) {
             button.classList.remove('speaking');
             button.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
             currentUtterance = null;
-            showErrorModal('An error occurred while pronouncing');
+            showErrorModal('An error occurred while pronouncing: ' + event.error);
         };
 
         currentUtterance = utterance;

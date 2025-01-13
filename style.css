@@ -386,13 +386,15 @@
         background: rgba(105, 139, 175, 0.8); /* لون أزرق */
     }
 
-    .language-label.no {
-        background: rgba(184, 117, 180, 0.8); /* لون أزرق */
+    /* .language-label.no {
+        background: rgba(184, 117, 180, 0.8); /* لون أزرق 
+
     }
+    */
 
     .language-label.ru {
         background: rgba(187, 98, 107, 0.8); /* لون أحمر */
-}
+    }
     .example-header h4 {
         color: var(--primary);
         font-size: 1.2rem;
