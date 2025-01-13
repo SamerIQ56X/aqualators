@@ -1,17 +1,14 @@
-import * as PlayHT from 'playht';
-import fs from 'fs';
 
 window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 
+
+import * as PlayHT from 'playht';
 
 // Initialize client
 PlayHT.init({
   userId: 'GFPsCMm1iqMxBgQcOWozxjneXmB3',
   apiKey: 'ba4738c7f85b4172b357ef56ec30c4c4',
 });
-
-
-
 
 // دالة لفك تشفير النصوص باستخدام Base64
 

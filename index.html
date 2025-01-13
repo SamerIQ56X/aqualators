@@ -88,9 +88,7 @@
                         <i class="fas fa-copy"></i>
                         Copy
                     </button>
-                    <button class="speech-btn" onclick="speakText('inputText')">
-                        <i class="fas fa-volume-up"></i>
-                        Listen
+                    <button id="listenBtn" onclick="speakText('inputText')"><i class="fas fa-volume-up"></i> Listen</button>
                     </button>
                     <button class="microphone-btn" onclick="startRecognition()">
                         <i class="fas fa-microphone"></i>
@@ -174,5 +172,12 @@
         </div>
     </footer>
     <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/playht@latest/dist/playht.min.js"></script>
+    <script>
+    PlayHT.init({
+        userId: 'GFPsCMm1iqMxBgQcOWozxjneXmB3',
+        apiKey: 'ba4738c7f85b4172b357ef56ec30c4c4',
+    });
+    </script>
 </body>
 </html>
