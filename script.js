@@ -181,6 +181,13 @@ function getVoiceForLanguage(lang) {
                 v.name.toLowerCase().includes(indicator)
             )
         ) || voices.find(v => v.name === "Microsoft Zira Desktop") || voices.find(v => v.lang === 'en-UK');
+    } else if (lang === 'no') {
+        femaleVoice = voices.find(v => 
+            v.lang.startsWith('no') && 
+            femaleIndicators.some(indicator => 
+                v.name.toLowerCase().includes(indicator)
+            )
+        ) || voices.find(v => v.lang === 'no-NO');
     }
 
     if (!femaleVoice) {
@@ -288,6 +295,7 @@ window.addEventListener('beforeunload', () => {
 document.addEventListener('DOMContentLoaded', loadVoices);
 
 // Class to manage translation functionality
+// Class to manage translation functionality
 class TranslationManager {
     constructor() {
         this.API_KEY = apiKey;
@@ -295,9 +303,10 @@ class TranslationManager {
         this.MIN_HEIGHT = 100;
         this.GEMINI_API_URL = apiUrl;
         this.SUPPORTED_LANGUAGES = {
+            no: 'Norwegian',
             ar: 'Arabic',
             en: 'English',
-            ru: 'Русский'
+            ru: 'Russian'
         };
         this.selectedTargetLang = localStorage.getItem('selectedTargetLang') || 'en';
         this.translationHistory = this.loadHistory();
@@ -306,6 +315,9 @@ class TranslationManager {
         this.setupAutoResize();
         this.createLanguageSelector();
     }
+
+    // بقية الكود...
+
 
     initElements() {
         this.elements = {
@@ -361,9 +373,11 @@ class TranslationManager {
     detectLanguage(text) {
         const arabicPattern = /[\u0600-\u06FF]/;
         const russianPattern = /[\u0400-\u04FF]/;
-        
+        const norwegianPattern = /[\u00C0-\u00FF]/; // إضافة نمط للتعرف على الأحرف النرويجية
+
         if (arabicPattern.test(text)) return 'ar';
         if (russianPattern.test(text)) return 'ru';
+        if (norwegianPattern.test(text)) return 'no';
         return 'en';
     }
 
