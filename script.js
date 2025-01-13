@@ -56,7 +56,7 @@ document.addEventListener('keydown', function(event) {
 const controlsContainer = document.querySelector('.controls');
 if (controlsContainer) {
     const shortcutNote = document.createElement('p');
-    shortcutNote.textContent = 'استخدم Ctrl + Enter لتنفيذ الترجمة';
+    shortcutNote.textContent = '';
     shortcutNote.style.color = 'var(--text-light)';
     shortcutNote.style.textAlign = 'center';
     shortcutNote.style.marginTop = '1rem';
