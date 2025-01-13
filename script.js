@@ -520,7 +520,7 @@ ${text}`;
 
         const wordCount = text.split(/\s+/).length;
         if (wordCount > 2) {
-            examplesContainer.innerHTML = '<p class="no-examples">لا تتوفر أمثلة لجمل طويلة</p>';
+            examplesContainer.innerHTML = '<p class="no-examples">Examples are available when it is a one or two words</p>';
             return [];
         }
 
