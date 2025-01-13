@@ -4,7 +4,7 @@ function decodeBase64(encoded) {
 }
 
 // المعلومات الحساسة مشفرة
-const encodedApiKey = 'QUl6YVN5Q3hNQmticXJhRlp1U0xQMi04MkQzcTAtek9sQnJMdHhR';
+const encodedApiKey = 'QUl6YVN5Q3hNQmtiOXFzcWZadVNMUDItODJEM3Ewei1PbEJyTHR4UA==';
 const encodedApiUrl = 'aHR0cHM6Ly9nZW5lcmF0aXZlbGFuZ3VhZ2UuZ29vZ2xlYXBpcy5jb20vdjFiZXRhL21vZGVscy9nZW1pbmktcHJvOmdlbmVyYXRlQ29udGVudA==';
 
 // فك تشفير المعلومات الحساسة
@@ -56,7 +56,7 @@ document.addEventListener('keydown', function(event) {
 const controlsContainer = document.querySelector('.controls');
 if (controlsContainer) {
     const shortcutNote = document.createElement('p');
-    shortcutNote.textContent = '';
+    shortcutNote.textContent = 'استخدم Ctrl + Enter لتنفيذ الترجمة';
     shortcutNote.style.color = 'var(--text-light)';
     shortcutNote.style.textAlign = 'center';
     shortcutNote.style.marginTop = '1rem';
@@ -368,6 +368,14 @@ class TranslationManager {
     }
 
     async translate(text, sourceLang, targetLang) {
+        const allowedHost = 'aqualators.vercel.app'; // المضيف المسموح
+        const currentHost = window.location.hostname;
+
+        if (currentHost !== allowedHost) {
+            showErrorModal('Unauthorized environment. Translation is disabled.');
+            return;
+        }
+
         try {
             const prompt = `Translate the following text from ${this.SUPPORTED_LANGUAGES[sourceLang]} to ${this.SUPPORTED_LANGUAGES[targetLang]}. 
 The translation must be completely literal and exact, without any decorative quotes or special characters.
