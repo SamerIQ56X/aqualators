@@ -13,13 +13,10 @@ const apiUrl = decodeBase64(encodedApiUrl);
 
 // التحقق من المضيف وتعطيل CSS إذا كان المضيف غير مصرح به
 document.addEventListener('DOMContentLoaded', () => {
-    const allowedHosts = ['github.io', 'github.com']; // قائمة بالمضيفين المسموح لهم
+    const allowedHost = 'aqualators.vercel.app'; // المضيف المسموح
     const currentHost = window.location.hostname;
 
-    // تحقق من أن المضيف الحالي يحتوي على أي من المضيفين المسموح لهم
-    const isAllowedHost = allowedHosts.some(host => currentHost.includes(host));
-    
-    if (!isAllowedHost) {
+    if (currentHost !== allowedHost) {
         console.error('Unauthorized environment. Disabling styles.');
         // إزالة الرابط المرجعي لملف CSS لتعطيل الأنماط
         document.querySelectorAll('link[rel="stylesheet"]').forEach(link => link.remove());
