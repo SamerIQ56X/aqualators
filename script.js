@@ -1,4 +1,6 @@
-// دالة لفك تشفير النصوص باستخدام Base64
+window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+
 function decodeBase64(encoded) {
     return atob(encoded);
 }
@@ -150,6 +152,7 @@ function loadVoices() {
         } else {
             speechSynthesis.addEventListener('voiceschanged', () => {
                 voices = speechSynthesis.getVoices();
+                console.log(voices); // عرض الأصوات المتاحة
                 resolve(voices);
             });
         }

@@ -379,15 +379,19 @@
     }
 
     .language-label.ar {
-        background: rgb(60 72 105);
+        background: rgb(87, 87, 87);
     }
 
     .language-label.en {
-        background: rgba(0, 123, 255, 0.8); /* لون أزرق */
+        background: rgba(105, 139, 175, 0.8); /* لون أزرق */
+    }
+
+    .language-label.no {
+        background: rgba(184, 117, 180, 0.8); /* لون أزرق */
     }
 
     .language-label.ru {
-        background: rgba(220, 53, 69, 0.8); /* لون أحمر */
+        background: rgba(187, 98, 107, 0.8); /* لون أحمر */
 }
     .example-header h4 {
         color: var(--primary);
