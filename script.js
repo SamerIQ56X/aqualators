@@ -4,7 +4,7 @@ function decodeBase64(encoded) {
 }
 
 // المعلومات الحساسة مشفرة
-const encodedApiKey = 'QUl6YVN5Q3hNQmtiOXFzcWZadVNMUDItODJEM3Ewei1PbEJyTHR4UA==';
+const encodedApiKey = 'QUl6YVN5Q3hNQmticXJhRlp1U0xQMi04MkQzcTAtek9sQnJMdHhR';
 const encodedApiUrl = 'aHR0cHM6Ly9nZW5lcmF0aXZlbGFuZ3VhZ2UuZ29vZ2xlYXBpcy5jb20vdjFiZXRhL21vZGVscy9nZW1pbmktcHJvOmdlbmVyYXRlQ29udGVudA==';
 
 // فك تشفير المعلومات الحساسة
